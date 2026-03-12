@@ -1,0 +1,47 @@
+.specialty-grids {
+  padding: 40px 0 80px;
+}
+
+.specialty-section {
+  margin-bottom: 80px;
+}
+
+.specialty-title {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.specialty-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 2px;
+  background: var(--accent-gold);
+  margin: 16px auto 0;
+}
+
+.specialty-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .specialty-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .specialty-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .specialty-grid {
+    grid-template-columns: 1fr;
+  }
+}

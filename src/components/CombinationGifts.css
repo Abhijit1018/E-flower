@@ -1,0 +1,149 @@
+.combination-gifts {
+  padding: 80px 0;
+}
+
+.combo-layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+}
+
+.combo-large {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.combo-large-item {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.combo-large-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.combo-large-item:hover img {
+  transform: scale(1.1);
+}
+
+.combo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  color: var(--white);
+}
+
+.combo-overlay h3 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.combo-price {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+.combo-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.combo-actions button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--white);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, color 0.3s;
+}
+
+.combo-actions button:hover {
+  background: var(--accent-gold);
+  color: var(--white);
+}
+
+.combo-small {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.combo-small-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.combo-small-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.combo-small-item:hover img {
+  transform: scale(1.1);
+}
+
+.combo-small-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.combo-small-overlay h4 {
+  font-size: 14px;
+}
+
+.combo-small-overlay span {
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+@media (max-width: 900px) {
+  .combo-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .combo-large {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .combo-small {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .combo-large {
+    grid-template-columns: 1fr;
+  }
+  
+  .combo-small {
+    grid-template-columns: 1fr;
+  }
+}

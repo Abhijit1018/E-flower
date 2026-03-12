@@ -1,0 +1,203 @@
+.suggestion-catalog {
+  padding: 40px 0;
+}
+
+.catalog-wrapper {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── Left Banner ── */
+.catalog-banner {
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  min-height: 340px;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.catalog-banner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.banner-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.banner-image img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.banner-text {
+  padding-top: 12px;
+}
+
+.banner-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.banner-text p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.banner-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--white);
+  font-size: 20px;
+  transition: transform 0.3s;
+}
+
+.catalog-banner:hover .banner-arrow {
+  transform: translateX(4px);
+}
+
+/* ── Right Grid ── */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.catalog-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+.catalog-item:hover {
+  transform: translateY(-4px);
+}
+
+.catalog-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  font-style: italic;
+}
+
+/* ── Rounded shape (app-icon style) ── */
+.catalog-item-image.shape-rounded {
+  width: 120px;
+  height: 120px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #FFF8E1;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s;
+}
+
+.catalog-item:hover .catalog-item-image.shape-rounded {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.catalog-item-image.shape-rounded img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Heart shape ── */
+.catalog-item-image.shape-heart {
+  width: 120px;
+  height: 110px;
+  position: relative;
+  overflow: hidden;
+  clip-path: path('M60,100 C60,100 0,65 0,35 C0,15 15,0 35,0 C50,0 57,10 60,18 C63,10 70,0 85,0 C105,0 120,15 120,35 C120,65 60,100 60,100 Z');
+  background: #FCE4EC;
+  transition: transform 0.3s;
+}
+
+.catalog-item:hover .catalog-item-image.shape-heart {
+  transform: scale(1.06);
+}
+
+.catalog-item-image.shape-heart img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .catalog-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-banner {
+    flex-direction: row;
+    min-height: auto;
+    padding: 20px;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .banner-image {
+    max-width: 200px;
+    padding: 0;
+  }
+
+  .banner-text {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .catalog-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .catalog-item-image.shape-rounded,
+  .catalog-item-image.shape-heart {
+    width: 80px;
+    height: 80px;
+  }
+
+  .catalog-item-image.shape-heart {
+    clip-path: path('M40,67 C40,67 0,43 0,23 C0,10 10,0 23,0 C33,0 38,7 40,12 C42,7 47,0 57,0 C70,0 80,10 80,23 C80,43 40,67 40,67 Z');
+    height: 73px;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .catalog-banner {
+    flex-direction: column;
+  }
+
+  .banner-image {
+    max-width: 100%;
+  }
+}

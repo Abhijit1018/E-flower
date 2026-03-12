@@ -1,0 +1,7 @@
+.app {
+  min-height: 100vh;
+}
+
+main {
+  padding-top: 130px; /* Adjusts for the fixed 130px height header */
+}

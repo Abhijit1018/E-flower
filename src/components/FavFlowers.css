@@ -1,0 +1,78 @@
+.fav-flowers {
+  padding: 50px 0;
+}
+
+.fav-flowers-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: var(--primary);
+}
+
+.fav-flowers-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.fav-flower-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+.fav-flower-card:hover {
+  transform: translateY(-6px);
+}
+
+.fav-flower-image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s;
+}
+
+.fav-flower-card:hover .fav-flower-image {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+.fav-flower-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.fav-flower-card:hover .fav-flower-image img {
+  transform: scale(1.06);
+}
+
+.fav-flower-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .fav-flowers-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .fav-flowers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .fav-flowers-title {
+    font-size: 24px;
+  }
+}

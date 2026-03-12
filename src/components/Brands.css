@@ -1,0 +1,43 @@
+.brands {
+  padding: 40px 0;
+  background: var(--white);
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.brands-track {
+  display: flex;
+  animation: brandScroll 25s linear infinite;
+  width: fit-content;
+}
+
+.brand-item {
+  flex: 0 0 180px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  white-space: nowrap;
+  transition: opacity 0.3s, color 0.3s;
+  text-transform: uppercase;
+}
+
+.brand-item:hover .brand-text {
+  opacity: 1;
+  color: var(--primary);
+}
+
+@keyframes brandScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
