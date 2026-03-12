@@ -31,13 +31,20 @@ export default function Search() {
   const searchProducts = (searchQuery) => {
     setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/products?search=${encodeURIComponent(searchQuery)}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Request failed with status ${res.status}`);
+        }
+
+        return res.json();
+      })
       .then(data => {
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
+        setProducts([]);
         setLoading(false);
       });
   };

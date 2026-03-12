@@ -20,17 +20,47 @@ export default function ProductDetail() {
   useEffect(() => {
     setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/products/${id}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Request failed with status ${res.status}`);
+        }
+
+        return res.json();
+      })
       .then(data => {
         setProduct(data);
+
+        if (!data?.category) {
+          setSimilarProducts([]);
+          setLoading(false);
+          return null;
+        }
+
         fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/products?category=${data.category}`)
-          .then(res => res.json())
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`Request failed with status ${res.status}`);
+            }
+
+            return res.json();
+          })
           .then(products => {
-            setSimilarProducts(products.filter(p => p.id !== parseInt(id)).slice(0, 4));
+            const safeProducts = Array.isArray(products) ? products : [];
+            setSimilarProducts(safeProducts.filter(p => p.id !== parseInt(id, 10)).slice(0, 4));
+            setLoading(false);
+          })
+          .catch(err => {
+            console.error(err);
+            setSimilarProducts([]);
             setLoading(false);
           });
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        setProduct(null);
+        setSimilarProducts([]);
+        setLoading(false);
+      });
   }, [id]);
 
   const handleAddToCart = () => {

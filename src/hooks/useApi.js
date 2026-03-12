@@ -2,13 +2,23 @@ import { useState, useEffect } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
+async function fetchArray(path) {
+  const response = await fetch(`${API_URL}${path}`);
+
+  if (!response.ok) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
+  const data = await response.json();
+  return Array.isArray(data) ? data : [];
+}
+
 export function useProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    fetch(`${API_URL}/api/products`)
-      .then(res => res.json())
+    fetchArray('/api/products')
       .then(data => {
         setProducts(data);
         setLoading(false);
@@ -26,8 +36,7 @@ export function useCategories() {
   const [categories, setCategories] = useState([]);
   
   useEffect(() => {
-    fetch(`${API_URL}/api/categories`)
-      .then(res => res.json())
+    fetchArray('/api/categories')
       .then(data => setCategories(data))
       .catch(err => console.error('Failed to fetch categories:', err));
   }, []);
@@ -39,8 +48,7 @@ export function useCoupons() {
   const [coupons, setCoupons] = useState([]);
   
   useEffect(() => {
-    fetch(`${API_URL}/api/coupons`)
-      .then(res => res.json())
+    fetchArray('/api/coupons')
       .then(data => setCoupons(data))
       .catch(err => console.error('Failed to fetch coupons:', err));
   }, []);

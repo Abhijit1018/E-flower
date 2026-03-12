@@ -26,13 +26,20 @@ export default function Products() {
       url += `?category=${category}`;
     }
     fetch(url)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Request failed with status ${res.status}`);
+        }
+
+        return res.json();
+      })
       .then(data => {
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
+        setProducts([]);
         setLoading(false);
       });
   }, [category]);
