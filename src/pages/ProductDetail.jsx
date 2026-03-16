@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiStar, FiTruck, FiRefreshCw, FiShield } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
@@ -13,6 +13,7 @@ export default function ProductDetail() {
   const [activeTab, setActiveTab] = useState('description');
   const [loading, setLoading] = useState(true);
   const { addToCart, addToWishlist, wishlist, cart, formatPrice } = useApp();
+  const navigate = useNavigate();
 
   const isWishlisted = wishlist.some(w => w.id === parseInt(id));
   const inCart = cart.find(c => c.id === parseInt(id));
@@ -68,6 +69,15 @@ export default function ProductDetail() {
       for (let i = 0; i < quantity; i++) {
         addToCart(product);
       }
+    }
+  };
+
+  const handleBuyNow = () => {
+    if (product) {
+      for (let i = 0; i < quantity; i++) {
+        addToCart(product);
+      }
+      navigate('/cart');
     }
   };
 
@@ -149,12 +159,20 @@ export default function ProductDetail() {
             </div>
 
             <div className="product-actions">
-              <button 
-                className={`add-to-cart ${inCart ? 'in-cart' : ''}`}
-                onClick={handleAddToCart}
-              >
-                <FiShoppingBag /> {inCart ? 'Added to Cart' : 'Add to Cart'}
-              </button>
+              <div className="primary-actions">
+                <button 
+                  className="buy-now-btn"
+                  onClick={handleBuyNow}
+                >
+                  Buy Now
+                </button>
+                <button 
+                  className={`add-to-cart ${inCart ? 'in-cart' : ''}`}
+                  onClick={handleAddToCart}
+                >
+                  <FiShoppingBag /> {inCart ? 'Added to Cart' : 'Add to Cart'}
+                </button>
+              </div>
               <button 
                 className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
                 onClick={() => addToWishlist(product)}
