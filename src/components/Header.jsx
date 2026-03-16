@@ -1,27 +1,39 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiSearch, FiShoppingBag, FiHeart, FiMenu, FiX, FiChevronDown, FiUser } from 'react-icons/fi';
-import { useApp } from '../context/AppContext';
+import { FiSearch, FiShoppingBag, FiHeart, FiMenu, FiX, FiChevronDown, FiUser, FiTruck, FiGift } from 'react-icons/fi';
+import { useApp, currencies } from '../context/AppContext';
 import './Header.css';
 
 export default function Header() {
-  const { cart, wishlist } = useApp();
+  const { cart, wishlist, activeCurrency, setActiveCurrency } = useApp();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [openDropdown, setOpenDropdown] = useState(null);
   const [user, setUser] = useState(null);
+  const [currencyOpen, setCurrencyOpen] = useState(false);
+  const currencyRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     
+    const handleClickOutside = (event) => {
+      if (currencyRef.current && !currencyRef.current.contains(event.target)) {
+        setCurrencyOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+
     const storedUser = localStorage.getItem('eflower-user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -103,21 +115,63 @@ export default function Header() {
         </div>
 
         <div className="header-right">
-          {user ? (
-            <Link to="/dashboard" className="user-btn">
-              <img src={user.avatar || 'https://picsum.photos/seed/user/100/100'} alt={user.name} />
+          <div className="header-utilities">
+            <Link to="/same-day" className="utility-item">
+              <FiTruck className="utility-icon" />
+              <span className="utility-label fine-font">Same Day</span>
             </Link>
-          ) : (
-            <Link to="/login" className="icon-btn"><FiUser /></Link>
-          )}
-          <Link to="/wishlist" className="icon-btn">
-            <FiHeart />
-            {wishlist.length > 0 && <span className="badge">{wishlist.length}</span>}
-          </Link>
-          <Link to="/cart" className="icon-btn cart-btn">
-            <FiShoppingBag />
-            {cartCount > 0 && <span className="badge">{cartCount}</span>}
-          </Link>
+            
+            <div className="utility-item currency-utility" ref={currencyRef}>
+              <button 
+                className="currency-btn" 
+                onClick={() => setCurrencyOpen(!currencyOpen)}
+              >
+                <div className="currency-badge fine-font">{activeCurrency.symbol}</div>
+                <span className="utility-label fine-font active-label">{activeCurrency.code}</span>
+              </button>
+              
+              {currencyOpen && (
+                <div className="currency-dropdown-box">
+                  {currencies.map(curr => (
+                    <button 
+                      key={curr.code}
+                      className={`currency-option ${curr.code === activeCurrency.code ? 'selected' : ''}`}
+                      onClick={() => {
+                        setActiveCurrency(curr);
+                        setCurrencyOpen(false);
+                      }}
+                    >
+                      <img src={`https://flagcdn.com/24x18/${curr.flagCode}.png`} alt={curr.code} />
+                      <span className="fine-font">{curr.code}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link to="/corporate" className="utility-item">
+              <FiGift className="utility-icon" />
+              <span className="utility-label fine-font">Corporate</span>
+            </Link>
+          </div>
+
+          <div className="header-actions">
+            {user ? (
+              <Link to="/dashboard" className="user-btn">
+                <img src={user.avatar || 'https://picsum.photos/seed/user/100/100'} alt={user.name} />
+              </Link>
+            ) : (
+              <Link to="/login" className="icon-btn"><FiUser /></Link>
+            )}
+            <Link to="/wishlist" className="icon-btn">
+              <FiHeart />
+              {wishlist.length > 0 && <span className="badge">{wishlist.length}</span>}
+            </Link>
+            <Link to="/cart" className="icon-btn cart-btn">
+              <FiShoppingBag />
+              {cartCount > 0 && <span className="badge">{cartCount}</span>}
+            </Link>
+          </div>
         </div>
       </div>
 

@@ -5,7 +5,7 @@ import { useApp } from '../context/AppContext';
 import './Wishlist.css';
 
 export default function Wishlist() {
-  const { wishlist, removeFromWishlist, addToCart } = useApp();
+  const { wishlist, removeFromWishlist, addToCart, formatPrice } = useApp();
 
   if (wishlist.length === 0) {
     return (
@@ -53,7 +53,7 @@ export default function Wishlist() {
                   <h3>{item.name}</h3>
                 </Link>
                 <span className="item-category">{item.category}</span>
-                <div className="item-price">${item.price}</div>
+                <div className="item-price">{formatPrice(item.price)}</div>
               </div>
               <div className="item-actions">
                 <button className="add-btn" onClick={() => addToCart(item)}>

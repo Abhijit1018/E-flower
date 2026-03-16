@@ -5,7 +5,7 @@ import { useApp } from '../context/AppContext';
 import './Cart.css';
 
 export default function Cart() {
-  const { cart, setCart, removeFromCart, cartTotal, appliedCoupon, discount } = useApp();
+  const { cart, setCart, removeFromCart, cartTotal, appliedCoupon, discount, formatPrice } = useApp();
 
   const updateQuantity = (id, change) => {
     setCart(prev => prev.map(item => 
@@ -62,14 +62,14 @@ export default function Cart() {
                     <h3>{item.name}</h3>
                   </Link>
                   <span className="item-category">{item.category}</span>
-                  <div className="item-price">${item.price}</div>
+                  <div className="item-price">{formatPrice(item.price)}</div>
                 </div>
                 <div className="item-quantity">
                   <button onClick={() => updateQuantity(item.id, -1)}><FiMinus /></button>
                   <span>{item.qty}</span>
                   <button onClick={() => updateQuantity(item.id, 1)}><FiPlus /></button>
                 </div>
-                <div className="item-total">${item.price * item.qty}</div>
+                <div className="item-total">{formatPrice(item.price * item.qty)}</div>
                 <button className="remove-btn" onClick={() => removeFromCart(item.id)}>
                   <FiTrash2 />
                 </button>
@@ -81,12 +81,12 @@ export default function Cart() {
             <h3>Order Summary</h3>
             <div className="summary-row">
               <span>Subtotal</span>
-              <span>${cartTotal.toFixed(2)}</span>
+              <span>{formatPrice(cartTotal)}</span>
             </div>
             {appliedCoupon && (
               <div className="summary-row discount">
                 <span>Discount ({appliedCoupon.discount}%)</span>
-                <span>-${discount.toFixed(2)}</span>
+                <span>-{formatPrice(discount)}</span>
               </div>
             )}
             <div className="summary-row">
@@ -95,7 +95,7 @@ export default function Cart() {
             </div>
             <div className="summary-row total">
               <span>Total</span>
-              <span>${finalTotal.toFixed(2)}</span>
+              <span>{formatPrice(finalTotal)}</span>
             </div>
             <button className="checkout-btn">Proceed to Checkout</button>
             <Link to="/products" className="continue-btn">

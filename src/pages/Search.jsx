@@ -18,7 +18,7 @@ export default function Search() {
     rating: 0,
     sort: 'relevance'
   });
-  const { addToCart, addToWishlist, wishlist } = useApp();
+  const { addToCart, addToWishlist, wishlist, formatPrice } = useApp();
 
   useEffect(() => {
     const searchQuery = searchParams.get('q');
@@ -249,7 +249,7 @@ export default function Search() {
                           </Link>
                           <div className="result-rating">{'★'.repeat(Math.floor(product.rating))}{'☆'.repeat(5-Math.floor(product.rating))} ({product.rating})</div>
                           <div className="result-bottom">
-                            <span className="result-price">${product.price}</span>
+                            <span className="result-price">{formatPrice(product.price)}</span>
                             <button onClick={() => addToCart(product)}>
                               <FiShoppingBag />
                             </button>

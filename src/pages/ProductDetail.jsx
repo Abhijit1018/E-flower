@@ -12,7 +12,7 @@ export default function ProductDetail() {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [activeTab, setActiveTab] = useState('description');
   const [loading, setLoading] = useState(true);
-  const { addToCart, addToWishlist, wishlist, cart } = useApp();
+  const { addToCart, addToWishlist, wishlist, cart, formatPrice } = useApp();
 
   const isWishlisted = wishlist.some(w => w.id === parseInt(id));
   const inCart = cart.find(c => c.id === parseInt(id));
@@ -132,7 +132,7 @@ export default function ProductDetail() {
               <span className="rating-value">{product.rating}</span>
               <span className="review-count">({reviews.length} reviews)</span>
             </div>
-            <div className="product-price">${product.price}</div>
+            <div className="product-price">{formatPrice(product.price)}</div>
             
             <p className="product-description">
               Beautifully crafted {product.name.toLowerCase()} perfect for any occasion. 
@@ -186,7 +186,7 @@ export default function ProductDetail() {
                     <img src={combo.image} alt={combo.name} />
                     <div>
                       <span>{combo.name}</span>
-                      <strong>+${combo.price}</strong>
+                      <strong>+{formatPrice(combo.price)}</strong>
                     </div>
                   </div>
                 ))}
@@ -263,7 +263,7 @@ export default function ProductDetail() {
                   <Link to={`/products/${item.id}`}>
                     <img src={item.image} alt={item.name} />
                     <h4>{item.name}</h4>
-                    <span className="price">${item.price}</span>
+                    <span className="price">{formatPrice(item.price)}</span>
                   </Link>
                 </motion.div>
               ))}

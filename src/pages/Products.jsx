@@ -17,7 +17,7 @@ export default function Products() {
     maxPrice: 500,
     sort: 'default'
   });
-  const { addToCart, addToWishlist, wishlist } = useApp();
+  const { addToCart, addToWishlist, wishlist, formatPrice } = useApp();
 
   useEffect(() => {
     setLoading(true);
@@ -192,7 +192,7 @@ export default function Products() {
                       </Link>
                       <div className="product-rating">{'★'.repeat(Math.floor(product.rating))}{'☆'.repeat(5-Math.floor(product.rating))} ({product.rating})</div>
                       <div className="product-bottom">
-                        <span className="product-price">${product.price}</span>
+                        <span className="product-price">{formatPrice(product.price)}</span>
                         <button onClick={() => addToCart(product)}><FiShoppingBag /></button>
                       </div>
                     </div>

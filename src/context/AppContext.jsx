@@ -2,6 +2,17 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AppContext = createContext();
 
+export const currencies = [
+  { code: 'USD', symbol: '$', flagCode: 'us', rate: 1 },
+  { code: 'THB', symbol: '฿', flagCode: 'th', rate: 35 },
+  { code: 'SGD', symbol: 'S$', flagCode: 'sg', rate: 1.35 },
+  { code: 'QAR', symbol: 'QR', flagCode: 'qa', rate: 3.64 },
+  { code: 'NZD', symbol: '$', flagCode: 'nz', rate: 1.65 },
+  { code: 'MYR', symbol: 'RM', flagCode: 'my', rate: 4.7 },
+  { code: 'INR', symbol: '₹', flagCode: 'in', rate: 83 },
+  { code: 'GBP', symbol: '£', flagCode: 'gb', rate: 0.79 },
+];
+
 export function AppProvider({ children }) {
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem('eflower-cart');
@@ -10,6 +21,10 @@ export function AppProvider({ children }) {
   const [wishlist, setWishlist] = useState(() => {
     const saved = localStorage.getItem('eflower-wishlist');
     return saved ? JSON.parse(saved) : [];
+  });
+  const [activeCurrency, setActiveCurrency] = useState(() => {
+    const saved = localStorage.getItem('eflower-currency');
+    return saved ? JSON.parse(saved) : currencies.find(c => c.code === 'INR');
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -21,6 +36,15 @@ export function AppProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('eflower-wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
+
+  useEffect(() => {
+    localStorage.setItem('eflower-currency', JSON.stringify(activeCurrency));
+  }, [activeCurrency]);
+
+  const formatPrice = (priceInUSD) => {
+    const converted = priceInUSD * activeCurrency.rate;
+    return `${activeCurrency.symbol}${converted.toFixed(2)}`;
+  };
 
   const addToCart = (product) => {
     setCart(prev => {
@@ -68,7 +92,8 @@ export function AppProvider({ children }) {
       wishlist, addToWishlist, removeFromWishlist,
       searchQuery, setSearchQuery,
       appliedCoupon, applyCoupon,
-      cartTotal, discount
+      cartTotal, discount,
+      activeCurrency, setActiveCurrency, formatPrice
     }}>
       {children}
     </AppContext.Provider>
