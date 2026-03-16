@@ -73,9 +73,9 @@ export default function Search() {
     { id: 'roses', name: 'Roses' },
     { id: 'lilies', name: 'Lilies' },
     { id: 'orchids', name: 'Orchids' },
-    { id: 'hampers', name: 'Hampers' },
+    { id: 'tulips', name: 'Tulips' },
     { id: 'plants', name: 'Plants' },
-    { id: 'jewelry', name: 'Jewelry' }
+    { id: 'sunflowers', name: 'Sunflowers' }
   ];
 
   const popularSearches = ['Rose', 'Bouquet', 'Orchid', 'Gift Box', 'Plant', 'Necklace'];

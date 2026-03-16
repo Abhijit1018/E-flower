@@ -58,9 +58,9 @@ export default function Products() {
     { id: 'roses', name: 'Roses' },
     { id: 'lilies', name: 'Lilies' },
     { id: 'orchids', name: 'Orchids' },
-    { id: 'hampers', name: 'Hampers' },
+    { id: 'tulips', name: 'Tulips' },
     { id: 'plants', name: 'Plants' },
-    { id: 'jewelry', name: 'Jewelry' }
+    { id: 'sunflowers', name: 'Sunflowers' }
   ];
 
   const pageTitle = category ? categories.find(c => c.id === category)?.name || 'Products' : 'All Products';

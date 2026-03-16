@@ -20,10 +20,10 @@ export default function Home() {
   const coupons = useCoupons();
 
   const bouquetProducts = products.filter(p => ['roses', 'lilies', 'orchids', 'tulips', 'sunflowers'].includes(p.category)).slice(0, 8);
-  const hamperProducts = products.filter(p => p.category === 'hampers').slice(0, 8);
-  const plantProducts = products.filter(p => ['plants', 'succulents', 'terrariums'].includes(p.category)).slice(0, 8);
-  const jewelryProducts = products.filter(p => p.category === 'jewelry').slice(0, 8);
-  const giftProducts = products.filter(p => ['chocolates', 'wine', 'balloons', 'teddy', 'cakes'].includes(p.category)).slice(0, 8);
+  const hamperProducts = products.filter(p => ['hampers', 'congratulations', 'getwellsoon'].includes(p.category)).slice(0, 8);
+  const plantProducts = products.filter(p => ['plants', 'succulents', 'terrariums', 'dried'].includes(p.category)).slice(0, 8);
+  const jewelryProducts = products.filter(p => ['jewelry', 'wedding', 'sympathy'].includes(p.category)).slice(0, 8);
+  const giftProducts = products.filter(p => ['chocolates', 'wine', 'balloons', 'teddy', 'cakes', 'love', 'friendship', 'birthday', 'anniversary'].includes(p.category)).slice(0, 8);
 
   if (loading) {
     return (
@@ -67,7 +67,7 @@ export default function Home() {
       )}
       
       {jewelryProducts.length > 0 && (
-        <FeaturedProducts products={jewelryProducts} title="Elegant Jewelry Collection" id="jewelry" />
+        <FeaturedProducts products={jewelryProducts} title="Wedding & Premium Collection" id="jewelry" />
       )}
       
       <Testimonials testimonials={testimonials} />
