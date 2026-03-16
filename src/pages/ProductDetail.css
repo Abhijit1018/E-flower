@@ -172,7 +172,8 @@
   display: flex;
   gap: 16px;
   margin-bottom: 32px;
-  align-items: stretch;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .product-info .primary-actions {
@@ -472,10 +473,6 @@
     gap: 40px;
   }
   
-  .product-info .primary-actions {
-    flex-direction: column;
-  }
-  
   .product-gallery {
     position: static;
   }
@@ -488,6 +485,14 @@
 @media (max-width: 600px) {
   .product-info h1 {
     font-size: 28px;
+  }
+  
+  .product-info .product-actions {
+    flex-direction: column;
+  }
+
+  .product-info .primary-actions {
+    flex-direction: column;
   }
   
   .product-features {
