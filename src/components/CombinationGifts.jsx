@@ -6,7 +6,7 @@ import './CombinationGifts.css';
 
 const fallbackImage = 'https://picsum.photos/seed/fallback/400/400';
 
-function ComboItem({ item, large }) {
+function ComboItem({ item, large, formatPrice }) {
   const [imgError, setImgError] = useState(false);
 
   return (
@@ -28,12 +28,12 @@ function ComboItem({ item, large }) {
       {large ? (
         <div className="combo-overlay">
           <h3>{item.name}</h3>
-          <span className="combo-price">${item.price}</span>
+          <span className="combo-price">{formatPrice(item.price)}</span>
         </div>
       ) : (
         <div className="combo-small-overlay">
           <h4>{item.name}</h4>
-          <span>${item.price}</span>
+          <span>{formatPrice(item.price)}</span>
         </div>
       )}
     </motion.div>
@@ -41,7 +41,7 @@ function ComboItem({ item, large }) {
 }
 
 export default function CombinationGifts({ gifts }) {
-  const { addToCart } = useApp();
+  const { addToCart, formatPrice } = useApp();
   const largeItems = gifts.filter(g => g.large);
   const smallItems = gifts.filter(g => !g.large);
 
@@ -61,14 +61,14 @@ export default function CombinationGifts({ gifts }) {
           <div className="combo-large">
             {largeItems.map((item, index) => (
               <div key={item.id} onClick={() => addToCart(item)}>
-                <ComboItem item={item} large={true} />
+                <ComboItem item={item} large={true} formatPrice={formatPrice} />
               </div>
             ))}
           </div>
           
           <div className="combo-small">
             {smallItems.map((item, index) => (
-              <ComboItem key={item.id} item={item} large={false} />
+              <ComboItem key={item.id} item={item} large={false} formatPrice={formatPrice} />
             ))}
           </div>
         </div>

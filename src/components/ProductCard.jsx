@@ -6,7 +6,7 @@ import { useState } from 'react';
 import './ProductCard.css';
 
 export default function ProductCard({ product, index }) {
-  const { addToCart, addToWishlist, wishlist } = useApp();
+  const { addToCart, addToWishlist, wishlist, formatPrice } = useApp();
   const isWishlisted = wishlist.some(item => item.id === product.id);
   const [imgError, setImgError] = useState(false);
 
@@ -46,7 +46,7 @@ export default function ProductCard({ product, index }) {
           <h3 className="product-name">{product.name}</h3>
         </Link>
         <div className="product-bottom">
-          <span className="product-price">${product.price}</span>
+          <span className="product-price">{formatPrice(product.price)}</span>
           <button className="add-btn" onClick={() => addToCart(product)}>
             <FiShoppingBag />
           </button>
