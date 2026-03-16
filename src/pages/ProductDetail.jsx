@@ -19,7 +19,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/products/${id}`)
+    fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products/${id}`)
       .then(res => {
         if (!res.ok) {
           throw new Error(`Request failed with status ${res.status}`);
@@ -36,7 +36,7 @@ export default function ProductDetail() {
           return null;
         }
 
-        fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/products?category=${data.category}`)
+        fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products?category=${data.category}`)
           .then(res => {
             if (!res.ok) {
               throw new Error(`Request failed with status ${res.status}`);

@@ -30,7 +30,7 @@ export default function Search() {
 
   const searchProducts = (searchQuery) => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/products?search=${encodeURIComponent(searchQuery)}`)
+    fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products?search=${encodeURIComponent(searchQuery)}`)
       .then(res => {
         if (!res.ok) {
           throw new Error(`Request failed with status ${res.status}`);

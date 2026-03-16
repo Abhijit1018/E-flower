@@ -21,7 +21,7 @@ export default function Products() {
 
   useEffect(() => {
     setLoading(true);
-    let url = `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/products`;
+    let url = `${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products`;
     if (category && category !== 'all') {
       url += `?category=${category}`;
     }
