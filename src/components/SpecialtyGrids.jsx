@@ -4,10 +4,10 @@ import './SpecialtyGrids.css';
 
 export default function SpecialtyGrids({ products }) {
   const hampers = products.filter(p => p.category === 'hampers' || p.category === 'arrangements').slice(0, 8);
-  const plants = products.filter(p => p.category === 'plants').slice(0, 4);
-  const jewelry = products.filter(p => p.category === 'jewelry' || p.category === 'bouquets').slice(0, 4);
-  const succulents = products.filter(p => p.category === 'succulents' || p.category === 'wedding').slice(0, 4);
-  const terrariums = products.filter(p => p.category === 'terrariums' || p.category === 'dried').slice(0, 4);
+  const plants = products.filter(p => p.category === 'plants').slice(0, 8);
+  const jewelry = products.filter(p => p.category === 'jewelry' || p.category === 'bouquets').slice(0, 8);
+  const succulents = products.filter(p => p.category === 'succulents' || p.category === 'wedding').slice(0, 8);
+  const terrariums = products.filter(p => p.category === 'terrariums' || p.category === 'dried').slice(0, 8);
 
   return (
     <section className="specialty-grids">
