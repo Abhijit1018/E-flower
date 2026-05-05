@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiHeart, FiShoppingBag, FiMinus, FiPlus, FiStar, FiTruck, FiRefreshCw, FiShield } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
+import { fetchArray, fetchJson } from '../utils/api';
 import './ProductDetail.css';
 
 export default function ProductDetail() {
@@ -20,14 +21,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products/${id}`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`Request failed with status ${res.status}`);
-        }
-
-        return res.json();
-      })
+    fetchJson(`/api/products/${id}`)
       .then(data => {
         setProduct(data);
 
@@ -37,17 +31,9 @@ export default function ProductDetail() {
           return null;
         }
 
-        fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products?category=${data.category}`)
-          .then(res => {
-            if (!res.ok) {
-              throw new Error(`Request failed with status ${res.status}`);
-            }
-
-            return res.json();
-          })
+        fetchArray(`/api/products?category=${encodeURIComponent(data.category)}`)
           .then(products => {
-            const safeProducts = Array.isArray(products) ? products : [];
-            setSimilarProducts(safeProducts.filter(p => p.id !== parseInt(id, 10)).slice(0, 4));
+            setSimilarProducts(products.filter(p => p.id !== parseInt(id, 10)).slice(0, 4));
             setLoading(false);
           })
           .catch(err => {
@@ -96,9 +82,9 @@ export default function ProductDetail() {
   ];
 
   const combos = [
-    { id: 101, name: 'With Chocolate Box', price: 30, image: 'https://picsum.photos/seed/choco1/200/200' },
-    { id: 102, name: 'With Wine', price: 45, image: 'https://picsum.photos/seed/wine1/200/200' },
-    { id: 103, name: 'With Teddy Bear', price: 25, image: 'https://picsum.photos/seed/teddy1/200/200' },
+    { id: 101, name: 'With Chocolate Box', price: 30, image: 'https://images.unsplash.com/photo-1505253758473-4f6f0e1b5d6b?w=200&h=200&fit=crop' },
+    { id: 102, name: 'With Wine', price: 45, image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200&h=200&fit=crop' },
+    { id: 103, name: 'With Teddy Bear', price: 25, image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=200&h=200&fit=crop' },
   ];
 
   return (
@@ -158,7 +144,7 @@ export default function ProductDetail() {
               </div>
             </div>
 
-            <div className="product-actions">
+            <div className="detail-actions">
               <div className="primary-actions">
                 <button 
                   className="buy-now-btn"

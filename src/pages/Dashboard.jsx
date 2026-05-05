@@ -51,7 +51,7 @@ export default function Dashboard() {
       <div className="dashboard-layout">
         <aside className={`dashboard-sidebar ${sidebarOpen ? 'open' : ''}`}>
           <div className="sidebar-user">
-            <img src={user.avatar || 'https://picsum.photos/seed/user/100/100'} alt={user.name} />
+            <img src={user.avatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop'} alt={user.name} />
             <div>
               <h3>{user.name}</h3>
               <p>{user.email}</p>
@@ -113,7 +113,7 @@ function ProfileSection({ user }) {
       <p className="section-desc">Manage your personal information</p>
 
       <div className="profile-header">
-        <img src={user?.avatar || 'https://picsum.photos/seed/user/100/100'} alt="Profile" />
+        <img src={user?.avatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop'} alt="Profile" />
         <div>
           <button className="upload-btn">Change Photo</button>
           <p>JPG, PNG. Max 2MB</p>

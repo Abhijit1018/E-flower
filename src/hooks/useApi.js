@@ -1,17 +1,5 @@
 import { useState, useEffect } from 'react';
-
-const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '');
-
-async function fetchArray(path) {
-  const response = await fetch(`${API_URL}${path}`);
-
-  if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`);
-  }
-
-  const data = await response.json();
-  return Array.isArray(data) ? data : [];
-}
+import { fetchArray } from '../utils/api';
 
 export function useProducts() {
   const [products, setProducts] = useState([]);

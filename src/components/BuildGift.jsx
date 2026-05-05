@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import './BuildGift.css';
 
-const fallbackImage = 'https://picsum.photos/seed/fallback/300/300';
+const fallbackImage = 'https://images.unsplash.com/photo-1506086679524-a64b6b3b3c72?w=300&h=300&fit=crop';
 
 function GiftSet({ set, index }) {
   const [imgError, setImgError] = useState(false);

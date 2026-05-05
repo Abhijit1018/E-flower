@@ -3,7 +3,7 @@ import { FiArrowRight } from 'react-icons/fi';
 import { useState } from 'react';
 import './HolidayPromo.css';
 
-const fallbackImage = 'https://picsum.photos/seed/fallback/600/600';
+const fallbackImage = 'https://images.unsplash.com/photo-1494697275817-48356942ad3d?w=600&h=600&fit=crop';
 
 export default function HolidayPromo() {
   const [imgError, setImgError] = useState(false);
@@ -26,7 +26,7 @@ export default function HolidayPromo() {
         </div>
         <div className="promo-visual">
           <motion.img
-            src={imgError ? fallbackImage : "https://picsum.photos/seed/valentine/600/600"}
+            src={imgError ? fallbackImage : "https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=600&h=600&fit=crop"}
             alt="Valentine's"
             animate={{ y: [0, -15, 0] }}
             transition={{ repeat: Infinity, duration: 4 }}

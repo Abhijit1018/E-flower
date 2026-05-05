@@ -3,11 +3,34 @@ import ProductCard from './ProductCard';
 import './SpecialtyGrids.css';
 
 export default function SpecialtyGrids({ products }) {
-  const hampers = products.filter(p => p.category === 'hampers' || p.category === 'arrangements').slice(0, 8);
-  const plants = products.filter(p => p.category === 'plants').slice(0, 8);
-  const jewelry = products.filter(p => p.category === 'jewelry' || p.category === 'bouquets').slice(0, 8);
-  const succulents = products.filter(p => p.category === 'succulents' || p.category === 'wedding').slice(0, 8);
-  const terrariums = products.filter(p => p.category === 'terrariums' || p.category === 'dried').slice(0, 8);
+  const makeSection = (seedCats = [], desired = 8, productsList = products, minPerRow = 4) => {
+    const base = productsList.filter(p => seedCats.includes(p.category));
+    const taken = new Set(base.map(p => p.id));
+    const filler = productsList.filter(p => !taken.has(p.id));
+    const result = [...base];
+    let fi = 0;
+    while (result.length < Math.min(desired, productsList.length) && fi < filler.length) {
+      result.push(filler[fi++]);
+    }
+    if (result.length > 0) {
+      const mod = result.length % minPerRow;
+      if (mod !== 0) {
+        const need = minPerRow - mod;
+        let j = 0;
+        while (j < need && fi < filler.length) {
+          result.push(filler[fi++]);
+          j++;
+        }
+      }
+    }
+    return result.slice(0, desired);
+  };
+
+  const hampers = makeSection(['hampers', 'arrangements'], 8);
+  const plants = makeSection(['plants', 'indoor'], 8);
+  const jewelry = makeSection(['jewelry', 'bouquets', 'accessories'], 8);
+  const succulents = makeSection(['succulents', 'wedding'], 8);
+  const terrariums = makeSection(['terrariums', 'dried'], 8);
 
   return (
     <section className="specialty-grids">

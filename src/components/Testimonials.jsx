@@ -3,7 +3,7 @@ import { FaQuoteLeft } from 'react-icons/fa';
 import { useState } from 'react';
 import './Testimonials.css';
 
-const fallbackImage = 'https://picsum.photos/seed/fallback/300/300';
+const fallbackImage = 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&h=300&fit=crop';
 
 function TestimonialCard({ item, index }) {
   const [imgError, setImgError] = useState(false);

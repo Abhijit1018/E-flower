@@ -42,7 +42,9 @@ export function AppProvider({ children }) {
   }, [activeCurrency]);
 
   const formatPrice = (priceInUSD) => {
-    const converted = priceInUSD * activeCurrency.rate;
+    // Product prices are stored in INR. Convert INR -> selected currency using INR as base.
+    const inrRate = currencies.find(c => c.code === 'INR')?.rate || 83;
+    const converted = (priceInUSD / inrRate) * activeCurrency.rate;
     return `${activeCurrency.symbol}${converted.toFixed(2)}`;
   };
 

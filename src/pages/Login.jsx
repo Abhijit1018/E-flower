@@ -20,7 +20,7 @@ export default function Login() {
         name: 'John Doe', 
         email, 
         phone: '+1 234 567 8900',
-        avatar: 'https://picsum.photos/seed/user/100/100'
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop'
       };
       localStorage.setItem('eflower-user', JSON.stringify(user));
       setLoading(false);

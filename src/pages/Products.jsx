@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiGrid, FiList, FiFilter, FiX, FiHeart, FiShoppingBag, FiEye } from 'react-icons/fi';
+import { FiGrid, FiList, FiFilter, FiX, FiHeart, FiEye } from 'react-icons/fi';
+import { FaBagShopping } from 'react-icons/fa6';
 import { useApp } from '../context/AppContext';
+import { fetchArray } from '../utils/api';
 import './Products.css';
 
 export default function Products() {
   const { category } = useParams();
+  const fallbackProductImage = 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=400&h=400&fit=crop';
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('grid');
@@ -14,27 +17,20 @@ export default function Products() {
   const [filters, setFilters] = useState({
     category: category || 'all',
     minPrice: 0,
-    maxPrice: 500,
+    maxPrice: 3000,
     sort: 'default'
   });
   const { addToCart, addToWishlist, wishlist, formatPrice } = useApp();
 
   useEffect(() => {
     setLoading(true);
-    let url = `${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products`;
+    let path = '/api/products';
     if (category && category !== 'all') {
-      url += `?category=${category}`;
+      path += `?category=${encodeURIComponent(category)}`;
     }
-    fetch(url)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`Request failed with status ${res.status}`);
-        }
-
-        return res.json();
-      })
+    fetchArray(path)
       .then(data => {
-        setProducts(Array.isArray(data) ? data : []);
+        setProducts(data);
         setLoading(false);
       })
       .catch(err => {
@@ -173,7 +169,15 @@ export default function Products() {
                   >
                     <div className="product-image">
                       <Link to={`/products/${product.id}`}>
-                        <img src={product.image} alt={product.name} loading="lazy" />
+                        <img
+                          src={product.image || fallbackProductImage}
+                          alt={product.name}
+                          loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = fallbackProductImage;
+                          }}
+                        />
                       </Link>
                       <div className="product-actions">
                         <button 
@@ -193,7 +197,7 @@ export default function Products() {
                       <div className="product-rating">{'★'.repeat(Math.floor(product.rating))}{'☆'.repeat(5-Math.floor(product.rating))} ({product.rating})</div>
                       <div className="product-bottom">
                         <span className="product-price">{formatPrice(product.price)}</span>
-                        <button onClick={() => addToCart(product)}><FiShoppingBag /></button>
+                        <button onClick={() => addToCart(product)}><FaBagShopping /></button>
                       </div>
                     </div>
                   </motion.div>

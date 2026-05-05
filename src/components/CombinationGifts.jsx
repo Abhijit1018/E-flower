@@ -4,7 +4,7 @@ import { useApp } from '../context/AppContext';
 import { useState } from 'react';
 import './CombinationGifts.css';
 
-const fallbackImage = 'https://picsum.photos/seed/fallback/400/400';
+const fallbackImage = 'https://images.unsplash.com/photo-1505253758473-4f6f0e1b5d6b?w=400&h=400&fit=crop';
 
 function ComboItem({ item, large, formatPrice }) {
   const [imgError, setImgError] = useState(false);

@@ -3,7 +3,7 @@ import { FiArrowRight } from 'react-icons/fi';
 import { useRef, useEffect, useState } from 'react';
 import './Hero.css';
 
-const fallbackImage = 'https://picsum.photos/seed/fallback/800/600';
+const fallbackImage = 'https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=800&h=600&fit=crop';
 
 function HeroBanner({ banner, index }) {
   const [imgError, setImgError] = useState(false);

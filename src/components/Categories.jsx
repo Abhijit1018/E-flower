@@ -4,8 +4,6 @@ import { useState } from 'react';
 import './Categories.css';
 
 export default function Categories({ categories }) {
-  const fallbackImage = 'https://picsum.photos/seed/fallback/200/200';
-
   return (
     <section className="categories">
       <div className="container">
@@ -17,7 +15,7 @@ export default function Categories({ categories }) {
           transition={{ duration: 0.5 }}
         >
           {categories.map((cat, index) => (
-            <CategoryItem key={cat.id} cat={cat} index={index} fallbackImage={fallbackImage} />
+            <CategoryItem key={cat.id} cat={cat} index={index} />
           ))}
         </motion.div>
       </div>
@@ -25,8 +23,7 @@ export default function Categories({ categories }) {
   );
 }
 
-function CategoryItem({ cat, index, fallbackImage }) {
-  const [imgError, setImgError] = useState(false);
+function CategoryItem({ cat, index }) {
 
   return (
     <motion.div
@@ -42,12 +39,7 @@ function CategoryItem({ cat, index, fallbackImage }) {
         className="category-item"
       >
         <div className="category-icon">
-          <img 
-            src={imgError ? fallbackImage : cat.image} 
-            alt={cat.name} 
-            loading="lazy"
-            onError={() => setImgError(true)}
-          />
+          <span className="category-emoji" aria-hidden="true">{cat.icon || '🌸'}</span>
         </div>
         <span className="category-name">{cat.name}</span>
       </Link>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiHeart, FiShoppingBag, FiEye } from 'react-icons/fi';
+import { FiHeart, FiEye } from 'react-icons/fi';
+import { FaBagShopping } from 'react-icons/fa6';
 import { useApp } from '../context/AppContext';
 import { useState } from 'react';
 import './ProductCard.css';
@@ -10,7 +11,7 @@ export default function ProductCard({ product, index }) {
   const isWishlisted = wishlist.some(item => item.id === product.id);
   const [imgError, setImgError] = useState(false);
 
-  const fallbackImage = 'https://picsum.photos/seed/fallback/400/400';
+  const fallbackImage = 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=400&h=400&fit=crop';
 
   return (
     <motion.div
@@ -48,7 +49,7 @@ export default function ProductCard({ product, index }) {
         <div className="product-bottom">
           <span className="product-price">{formatPrice(product.price)}</span>
           <button className="add-btn" onClick={() => addToCart(product)}>
-            <FiShoppingBag />
+            <FaBagShopping />
           </button>
         </div>
       </div>

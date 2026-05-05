@@ -3,6 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiSearch, FiFilter, FiX, FiHeart, FiShoppingBag, FiEye } from 'react-icons/fi';
 import { useApp } from '../context/AppContext';
+import { fetchArray } from '../utils/api';
 import './Search.css';
 
 export default function Search() {
@@ -14,7 +15,7 @@ export default function Search() {
   const [filters, setFilters] = useState({
     category: 'all',
     minPrice: 0,
-    maxPrice: 500,
+    maxPrice: 3000,
     rating: 0,
     sort: 'relevance'
   });
@@ -30,16 +31,9 @@ export default function Search() {
 
   const searchProducts = (searchQuery) => {
     setLoading(true);
-    fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')}/api/products?search=${encodeURIComponent(searchQuery)}`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`Request failed with status ${res.status}`);
-        }
-
-        return res.json();
-      })
+    fetchArray(`/api/products?search=${encodeURIComponent(searchQuery)}`)
       .then(data => {
-        setProducts(Array.isArray(data) ? data : []);
+        setProducts(data);
         setLoading(false);
       })
       .catch(err => {

@@ -19,11 +19,36 @@ export default function Home() {
   const categories = useCategories();
   const coupons = useCoupons();
 
-  const bouquetProducts = products.filter(p => ['roses', 'lilies', 'orchids', 'tulips', 'sunflowers'].includes(p.category)).slice(0, 8);
-  const hamperProducts = products.filter(p => ['hampers', 'congratulations', 'getwellsoon'].includes(p.category)).slice(0, 8);
-  const plantProducts = products.filter(p => ['plants', 'succulents', 'terrariums', 'dried'].includes(p.category)).slice(0, 8);
-  const jewelryProducts = products.filter(p => ['jewelry', 'wedding', 'sympathy'].includes(p.category)).slice(0, 8);
-  const giftProducts = products.filter(p => ['chocolates', 'wine', 'balloons', 'teddy', 'cakes', 'love', 'friendship', 'birthday', 'anniversary'].includes(p.category)).slice(0, 8);
+  // helper: ensure section arrays have enough items and avoid odd grid rows
+  const makeSection = (seedCats = [], desired = 8, productsList = products, minPerRow = 4) => {
+    const base = productsList.filter(p => seedCats.includes(p.category));
+    const taken = new Set(base.map(p => p.id));
+    const filler = productsList.filter(p => !taken.has(p.id));
+    const result = [...base];
+    let fi = 0;
+    while (result.length < Math.min(desired, productsList.length) && fi < filler.length) {
+      result.push(filler[fi++]);
+    }
+    // ensure not ending with an odd row: pad to multiple of minPerRow if possible
+    if (result.length > 0) {
+      const mod = result.length % minPerRow;
+      if (mod !== 0) {
+        const need = minPerRow - mod;
+        let j = 0;
+        while (j < need && fi < filler.length) {
+          result.push(filler[fi++]);
+          j++;
+        }
+      }
+    }
+    return result.slice(0, desired);
+  };
+
+  const bouquetProducts = makeSection(['roses', 'lilies', 'orchids', 'tulips', 'sunflowers'], 8);
+  const hamperProducts = makeSection(['hampers', 'congratulations', 'getwellsoon', 'arrangements'], 8);
+  const plantProducts = makeSection(['plants', 'succulents', 'terrariums', 'dried', 'indoor'], 8);
+  const jewelryProducts = makeSection(['jewelry', 'wedding', 'sympathy', 'premium'], 8);
+  const giftProducts = makeSection(['chocolates', 'wine', 'balloons', 'teddy', 'cakes', 'love', 'friendship', 'birthday', 'anniversary', 'accessories'], 8);
 
   if (loading) {
     return (

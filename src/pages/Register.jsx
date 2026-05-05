@@ -27,7 +27,7 @@ export default function Register() {
         name, 
         email, 
         phone,
-        avatar: 'https://picsum.photos/seed/user/100/100'
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop'
       };
       localStorage.setItem('eflower-user', JSON.stringify(user));
       setLoading(false);

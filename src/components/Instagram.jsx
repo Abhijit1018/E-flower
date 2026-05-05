@@ -3,7 +3,7 @@ import { FaHeart } from 'react-icons/fa';
 import { useState } from 'react';
 import './Instagram.css';
 
-const fallbackImage = 'https://picsum.photos/seed/fallback/300/300';
+const fallbackImage = 'https://images.unsplash.com/photo-1494697275817-48356942ad3d?w=300&h=300&fit=crop';
 
 function InstaItem({ img, index }) {
   const [imgError, setImgError] = useState(false);
